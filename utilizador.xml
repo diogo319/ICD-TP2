@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ListaUtilizadores>
+<Utilizador DataNasc="1994-10-21" NIF="293827172" Nome="Pedro Pedro">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1995-04-12" NIF="182938271" Nome="André André">
+<Funcionário Local="Caixa"/>
+</Utilizador>
+<Utilizador DataNasc="1997-01-01" NIF="125487698" Nome="Joana Joana">
+<Funcionário Local="Loja"/>
+</Utilizador>
+<Utilizador DataNasc="1994-07-13" NIF="123456789" Nome="Diogo Diogo">
+<Cliente>
+<Carrinho>
+<Peça ID="5" Quantidade="1" Tamanho="M"/>
+<Peça ID="4" Quantidade="1" Tamanho="40"/>
+<Peça ID="5" Quantidade="3" Tamanho="M"/>
+</Carrinho>
+</Cliente>
+</Utilizador>
+<Utilizador DataNasc="1998-10-26" NIF="124587963" Nome="Vasco Vasco">
+<Cliente>
+<Carrinho>
+<Peça ID="6" Quantidade="1" Tamanho="10/12"/>
+</Carrinho>
+</Cliente>
+</Utilizador>
+<Utilizador DataNasc="1994-08-04" NIF="123654789" Nome="Rogério Rogério">
+<Cliente>
+<Carrinho>
+<Peça ID="5" Quantidade="1" Tamanho="M"/>
+</Carrinho>
+</Cliente>
+</Utilizador>
+<Utilizador DataNasc="1998-10-26" NIF="124587963" Nome="Vasco Vasco">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1994-08-04" NIF="123654789" Nome="Rogério Rogério">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1234-11-25" NIF="987654321" Nome="Ruben Coelho">
+<Cliente>
+<Carrinho>
+<Peça ID="6" Quantidade="1" Tamanho="XL"/>
+<Peça ID="5" Quantidade="1" Tamanho="XL"/>
+</Carrinho>
+</Cliente>
+</Utilizador>
+<Utilizador DataNasc="1997-07-08" NIF="365478951" Nome="Blau Blau">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1999-09-08" NIF="256987456" Nome="Blei Blei">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1990-12-04" NIF="658745745" Nome="Bleo Bleo">
+<Cliente/>
+</Utilizador>
+<Utilizador DataNasc="1997-06-19" NIF="658965231" Nome="Bleu Bleu">
+<Cliente/>
+</Utilizador>
+</ListaUtilizadores>
