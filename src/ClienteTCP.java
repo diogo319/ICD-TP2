@@ -118,25 +118,25 @@ public class ClienteTCP {
 				op = ' ';
 			switch (op) {
 			case '1':
-				NodeList pecasHSocket = Catalogo(sock, "Homem");
+				NodeList pecasHSocket = Catalogo("Homem");
 				//NodeList pecasH = getNodesByTag(catalogo, "Secção", "Homem");
 				menuEquipamentos(sock, sc, nif, pecasHSocket, "Homem");
 				break;
 				
 			case '2':
-				NodeList pecasMSocket = Catalogo(sock, "Mulher");
+				NodeList pecasMSocket = Catalogo("Mulher");
 				//NodeList pecasM = getNodesByTag(catalogo, "Secção", "Mulher");
 				menuEquipamentos(sock, sc, nif, pecasMSocket, "Mulher");
 				break;
 				
 			case '3':
-				NodeList pecasCSocket = Catalogo(sock, "Criança");
+				NodeList pecasCSocket = Catalogo("Criança");
 				//NodeList pecasC = getNodesByTag(catalogo, "Secção", "Criança");
 				menuEquipamentos(sock, sc, nif, pecasCSocket, "Criança");
 				break;
 				
 			case '4':
-				NodeList pecasASocket = Catalogo(sock, "Acessórios");
+				NodeList pecasASocket = Catalogo("Acessórios");
 				//NodeList pecasA = getNodesByTag(catalogo, "Secção", "Acessorio");
 				menuPecas(sock,sc,nif,pecasASocket,"Acessórios","Acessórios");
 				
@@ -545,16 +545,26 @@ public class ClienteTCP {
 		return peca;
 	}
 	
-	private static NodeList Catalogo(Socket sock, String seccao) {
-		comando cmd = new comando();
-		Document request = cmd.requestCatalogo(seccao);
-		//XMLDoc.writeDocument(request, "request.xml");
-		//envia pedido
-		XMLReadWrite.documentToSocket(request, sock);
-		//obtém resposta
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-		//XMLDoc.writeDocument(reply, "reply.xml");
-		return reply.getElementsByTagName("Peça");
+	public static NodeList Catalogo(String seccao) {
+		Socket sock = null;
+		NodeList pecas = null;
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestCatalogo(seccao);
+			//XMLDoc.writeDocument(request, "request.xml");
+			//envia pedido
+			XMLReadWrite.documentToSocket(request, sock);
+			//obtém resposta
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			//XMLDoc.writeDocument(reply, "reply.xml");
+			pecas = reply.getElementsByTagName("Peça");
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return pecas;
 	}
 	
 	private static NodeList Carrinho(Socket sock){
