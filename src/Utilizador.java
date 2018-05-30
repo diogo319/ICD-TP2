@@ -35,7 +35,7 @@ public class Utilizador extends HttpServlet {
 			out.println("<body><h3>Bem-vindo "+ nome + "</<h3>");
 			if(tipoUtilizador.equals("Cliente")){
 
-		        out.println("<h3>Equipamentos Masculinos</h3>");
+		        out.println("<h3><a href='Equipamentos?seccao=Homem'>Equipamentos Masculinos</a></h3>");
 		        out.println("<h3>Equipamentos Femininos</h3>");
 		        out.println("<h3>Equipamentos Criança</h3>");
 		        out.println("<h3>Acessórios</h3>");
