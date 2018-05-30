@@ -55,7 +55,7 @@ public class Utilizador extends HttpServlet {
 			
 			else if(ClienteTCP.utilizador.getChildNodes().item(0).getAttributes().getNamedItem("Local").getTextContent().equals("Caixa")) {
 				
-				out.println("<h3>Consultar carrinhos de compras por aprovar</h3>");
+				out.println("<h3><a href='ConsultarCarrinhos'>Consultar carrinhos de compras por aprovar</a></h3>");
 				out.println("<h3><a href='TerminarSessao'>Terminar Sessão</a></h3>");
 				
 			}

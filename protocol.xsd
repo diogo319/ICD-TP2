@@ -26,6 +26,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				
 				<xs:element name="catalogo">
 					<xs:complexType>
 						<xs:sequence>
@@ -163,6 +164,27 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Peça" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="pecaByID">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="request">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="idPeca" type="xs:int" maxOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reply" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Peça" minOccurs="0"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>

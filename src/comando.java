@@ -310,6 +310,42 @@ public class comando {
 			return cmd;
 		}
 	}
+	
+	public Document requestPecaByID(String idPeca) {
+		Element pecaByID = cmd.createElement("pecaByID");
+		Element request = cmd.createElement("request");
+		pecaByID.appendChild(request);
+		
+		Element idPecaElem = cmd.createElement("idPeca");
+		
+		idPecaElem.appendChild(cmd.createTextNode(idPeca));
+		
+		request.appendChild(idPecaElem);
+		
+		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
+		protocol.appendChild(pecaByID);
+		return cmd;
+	}
+	
+	public Document replyPecaByID() {
+		//TODO
+		Document pecas = Loja.getPecas();
+		NodeList todasPecas = pecas.getElementsByTagName("Peça");
+		
+		Element reply = cmd.createElement("reply");
+		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
+		
+		for(int i = 0; i < todasPecas.getLength(); i++) {
+			if(todasPecas.item(i).getAttributes().getNamedItem("idPeca").getTextContent().equals(idPeca)) {
+				Element pecaClone = (Element)cmd.importNode(todasPecas.item(i), true);
+				reply.appendChild(pecaClone);
+			}
+		}
+		Element pecaByID = (Element) cmd.getElementsByTagName("pecaByID").item(0);
+		
+		pecaByID.appendChild(reply);
+		return cmd;
+	}
 		
 	public Document requestTodosCarrinhos() {
 		Element todosCarrinhos = cmd.createElement("mostrarTodosCarrinhos");
@@ -764,6 +800,15 @@ public class comando {
 		
 		if(cmd.getElementsByTagName("pecasTotal").getLength()==1)
 			com = replyPecasTotal();
+		
+		if(cmd.getElementsByTagName("mostrarTodosCarrinhos").getLength()==1)
+			com = replyTodosCarrinhos();
+		
+		if(cmd.getElementsByTagName("aprovarCarrinho").getLength()==1)
+			com = replyAprovarCarrinho();
+		
+		if(cmd.getElementsByTagName("pecaByID").getLength()==1)
+			com = replyPecaByID();
 		
 		if(com==null)
 			return cmd;

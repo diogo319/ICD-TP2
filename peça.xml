@@ -45,7 +45,7 @@
 		</Descrição>
 		<Calçado>
 			<Tamanho Quantidade="12" Valor="41"/>
-			<Tamanho Quantidade="8" Valor="40"/>
+			<Tamanho Quantidade="7" Valor="40"/>
 			<Tamanho Quantidade="6" Valor="39"/>
 			<Tamanho Quantidade="2" Valor="38"/>
 			<Tamanho Quantidade="4" Valor="37"/>
@@ -60,7 +60,7 @@
 		<Vestuário>
 			<Tamanho Quantidade="5" Valor="XL"/>
 			<Tamanho Quantidade="5" Valor="L"/>
-			<Tamanho Quantidade="4" Valor="M"/>
+			<Tamanho Quantidade="19" Valor="M"/>
 			<Tamanho Quantidade="10" Valor="S"/>
 		</Vestuário>
 	</Peça>
@@ -71,7 +71,7 @@
 		</Descrição>
 		<Vestuário>
 			<Tamanho Quantidade="5" Valor="12/14"/>
-			<Tamanho Quantidade="5" Valor="10/12"/>
+			<Tamanho Quantidade="4" Valor="10/12"/>
 			<Tamanho Quantidade="5" Valor="8/10"/>
 			<Tamanho Quantidade="5" Valor="6/8"/>
 		</Vestuário>

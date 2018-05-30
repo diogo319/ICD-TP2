@@ -185,7 +185,7 @@ public class ClienteTCP {
 			switch (op) {
 			
 			case '1':
-				NodeList carrinhos = mostrarTodosCarrinhos(sock);
+				NodeList carrinhos = mostrarTodosCarrinhos();
 				
 				//TODO
 				break;
@@ -475,6 +475,30 @@ public class ClienteTCP {
 		
 	}
 
+	public static NodeList mostrarTodosCarrinhos() {
+		Socket sock = null;
+		NodeList carrinhos = null;
+		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			
+			Document request = cmd.requestTodosCarrinhos();
+			
+			XMLReadWrite.documentToSocket(request, sock);
+			
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			
+			carrinhos = reply.getElementsByTagName("Carrinho");
+			
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return carrinhos;
+	}
+	
 	public static void Login(String nif) {
 		Socket sock = null;
 		
@@ -496,8 +520,29 @@ public class ClienteTCP {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static Node PecaByID(String idPeca) {
+		Socket sock = null;
+		Node peca = null;
 		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestPecaByID(idPeca);
+			// envia pedido
+			XMLReadWrite.documentToSocket(request, sock);
+			// obtém resposta
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			peca = reply.getElementsByTagName("Peça").item(0);
+			
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 		
+		return peca;
 	}
 	
 	private static NodeList Catalogo(Socket sock, String seccao) {
@@ -571,33 +616,31 @@ public class ClienteTCP {
 		return carrinho;
 	}
 	
-	private static NodeList AprovarCarrinho(Socket sock, String nif) {
-		comando cmd = new comando();
+	public static NodeList AprovarCarrinho(String nif) {
+		Socket sock = null;
+		NodeList carrinhos = null;
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			
+			Document request = cmd.requestAprovarCarrinho(nif);
+			
+			XMLReadWrite.documentToSocket(request, sock);
+					
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+					
+			carrinhos = reply.getElementsByTagName("Carrinho");
 		
-		Document request = cmd.requestAprovarCarrinho(nif);
-		
-		XMLReadWrite.documentToSocket(request, sock);
-				
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-				
-		NodeList carrinhos = reply.getElementsByTagName("Carrinho");
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 		
 		return carrinhos;
 	}
 	
-	private static NodeList mostrarTodosCarrinhos(Socket sock) {
-		comando cmd = new comando();
-		
-		Document request = cmd.requestTodosCarrinhos();
-		
-		XMLReadWrite.documentToSocket(request, sock);
-		
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-		
-		NodeList carrinhos = reply.getElementsByTagName("Carrinho");
-		
-		return carrinhos;
-	}
+
 	
 	public static int quantidadePretendida(Scanner sc, int quantMax) {
 		System.out.println("\nIntroduza a quantidade de itens pretendida (min 0 e máx " + quantMax + ")");
