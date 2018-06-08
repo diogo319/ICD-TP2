@@ -36,14 +36,16 @@ public class InserirPeca extends HttpServlet {
         		+ "</select>");
         
         out.println("<p>Vestuário <input name=\'tipo\' type=\'radio\'"
-        		+ " value=\'Vestuário\' required/>Calçado <input name=\"tipo\" "
-        		+ "type=\"radio\" value=\"Calçado\" required/></p>");
+        		+ " value=\'Vestuario\' required/>Calçado <input name=\"tipo\" "
+        		+ "type=\"radio\" value=\"Calcado\" required/></p>");
         
         out.println("<p>Designação: <input name=\'designacao\' type=\'text\' required/></p>");
         
         out.println("<p>Marca: <input name=\'marca\' type=\'text\' placeholder=\'Insira a marca da peça\' required/></p>");
         
-        out.println("<p>Descrição: <textarea rows=\'4\' cols=\'100\' placeholder=\'Insira a descrição do produto\' required></textarea></p>");
+        out.println("<p>Descrição: <textarea name=\'descricao\' rows=\'4\' cols=\'100\' placeholder=\'Insira a descrição do produto\' required></textarea></p>");
+        
+        out.println("<p>Preço: <input type=\'number\' name=\'preco\' required/>Euros</p>");
 	
         out.println("<p>Imagem: <input type=\'file\' name=\'image\' accept=\'image/*\'></p>");
 	

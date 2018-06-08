@@ -14,7 +14,7 @@
 <Carrinho>
 <Peça ID="5" Quantidade="1" Tamanho="M"/>
 <Peça ID="4" Quantidade="1" Tamanho="40"/>
-<Peça ID="5" Quantidade="3" Tamanho="M"/>
+<Peça ID="1" Quantidade="3" Tamanho="L"/>
 </Carrinho>
 </Cliente>
 </Utilizador>

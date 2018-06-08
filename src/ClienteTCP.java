@@ -145,8 +145,8 @@ public class ClienteTCP {
 				
 			case '5':
 				//TODO
-				NodeList pecasCarrinho = Carrinho(sock);
-				menuCarrinho(sock,sc,nif,pecasCarrinho);
+				Node pecasCarrinho = Carrinho();
+				//menuCarrinho(sock,sc,nif,pecasCarrinho);
 				break;
 				
 			
@@ -522,29 +522,6 @@ public class ClienteTCP {
 		}
 	}
 	
-	public static Node PecaByID(String idPeca) {
-		Socket sock = null;
-		Node peca = null;
-		
-		try {
-			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
-			comando cmd = new comando();
-			Document request = cmd.requestPecaByID(idPeca);
-			// envia pedido
-			XMLReadWrite.documentToSocket(request, sock);
-			// obtém resposta
-			Document reply = XMLReadWrite.documentFromSocket(sock);
-			peca = reply.getElementsByTagName("Peça").item(0);
-			
-		}catch(UnknownHostException e) {
-			e.printStackTrace();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		
-		return peca;
-	}
-	
 	public static NodeList Catalogo(String seccao) {
 		Socket sock = null;
 		NodeList pecas = null;
@@ -567,33 +544,125 @@ public class ClienteTCP {
 		return pecas;
 	}
 	
-	private static NodeList Carrinho(Socket sock){
-		comando cmd = new comando();
-		Document request = cmd.requestCarrinhos();
-		//XMLDoc.writeDocument(request, "request.xml");
-		//envia pedido
-		XMLReadWrite.documentToSocket(request, sock);
-		//obtém resposta
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-		//XMLDoc.writeDocument(reply, "reply.xml");
-		return reply.getElementsByTagName("Carrinho");
+	//TODO fazer alterar peca
+
+	public static Node AlterarPreco(String idPeca, String precoNovo) {
+		Socket sock = null;
+		Node peca = null;
+		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestModificarPreco(idPeca, precoNovo);
+			XMLReadWrite.documentToSocket(request, sock);
+			
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			
+			peca = reply.getElementsByTagName("Peça").item(0);
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return peca;
+	}
+	
+	public static Node AlterarQuantidade(String idPeca, String valor, String quantidadeNova) {
+		Socket sock = null;
+		Node peca = null;
+		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestModificarQuantidade(idPeca, valor, quantidadeNova);
+			XMLReadWrite.documentToSocket(request, sock);
+			
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			
+			peca = reply.getElementsByTagName("Peça").item(0);
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return peca;
+	}
+	
+	
+	public static Node PecaID(String idPeca) {
+		Socket sock = null;
+		Node peca = null;
+		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestPecaID(idPeca);
+			//XMLDoc.writeDocument(request, "request.xml");
+			//envia pedido
+			XMLReadWrite.documentToSocket(request, sock);
+			//obtém resposta
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			peca = reply.getElementsByTagName("Peça").item(0);
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return peca;
+	}
+
+	
+	public static Node Carrinho(){
+		Socket sock = null;
+		Node carrinho = null;
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent());
+			//XMLDoc.writeDocument(request, "request.xml");
+			//envia pedido
+			XMLReadWrite.documentToSocket(request, sock);
+			//obtém resposta
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			carrinho = reply.getElementsByTagName("Carrinho").item(0);
+			//XMLDoc.writeDocument(reply, "reply.xml");
+		}catch(UnknownHostException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+		
+		return carrinho;
 	}
 	
 
 	
 
-	private static NodeList AdicionarPeca(Socket sock, String designacao, String seccao, String preco, String tipo) {
-		comando cmd = new comando();
-		
-		Document request = cmd.requestAdicionarPeca(designacao, seccao, preco, tipo);
-		
-		XMLReadWrite.documentToSocket(request, sock);
-		
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-		
-		NodeList pecas = reply.getElementsByTagName("Peça");
-		return pecas;
-	}
+	public static String AdicionarPeca(String seccao, String tipo, String designacao, String marca, String descricao, String preco, String base64) {
+        Socket sock = null;
+        String idPeca = "";
+        try {
+            sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+           
+            comando cmd = new comando();
+           
+            Document request = cmd.requestAdicionarPeca(seccao, tipo, designacao, marca, descricao, preco, base64);
+           
+            XMLReadWrite.documentToSocket(request, sock);
+           
+            Document reply = XMLReadWrite.documentFromSocket(sock);
+           
+            NodeList pecas = reply.getElementsByTagName("Peça");
+            Node peca = pecas.item(pecas.getLength() - 1);
+            idPeca = peca.getAttributes().getNamedItem("idPeça").getTextContent();
+        }catch(UnknownHostException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+   
+        return idPeca;
+    }
 
 
 	private static NodeList PecasTotal(Socket sock) {
@@ -612,16 +681,25 @@ public class ClienteTCP {
 	}
 	
 	
-	private static Node AdicionarCarrinho(Socket sock, int idPeca, int quantidade, String tamanho) {
-		comando cmd = new comando();
-		
-		Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade);
-		
-		XMLReadWrite.documentToSocket(request, sock);
-				
-		Document reply = XMLReadWrite.documentFromSocket(sock);
-				
-		Node carrinho = reply.getElementsByTagName("Carrinho").item(0);
+	public static Node AdicionarCarrinho(int idPeca, int quantidade, String tamanho) {
+		Socket sock = null;
+		Node carrinho = null;
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			
+			Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade);
+			
+			XMLReadWrite.documentToSocket(request, sock);
+					
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+					
+			carrinho = reply.getElementsByTagName("Carrinho").item(0);
+		}catch(UnknownHostException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
 	
 		return carrinho;
 	}
@@ -679,7 +757,7 @@ public class ClienteTCP {
 				int idPeca = Integer.parseInt(peca.getAttributes().getNamedItem("idPeça").getTextContent());
 				int quantidadePecas = quantidadePretendida(sc, Integer.parseInt(quantidade));
 				
-				AdicionarCarrinho(sock, idPeca, quantidadePecas, "");
+				//AdicionarCarrinho(sock, idPeca, quantidadePecas, "");
 			}
 			
 		}else {
@@ -712,7 +790,7 @@ public class ClienteTCP {
 				int quantidadePecas = quantidadePretendida(sc, Integer.parseInt(tamanhos.item(Integer.parseInt(input)-1).getAttributes().getNamedItem("Quantidade").getTextContent()));
 				String tamanhoPretendido = tamanhos.item(Integer.parseInt(input)-1).getAttributes().getNamedItem("Valor").getTextContent();
 				
-				AdicionarCarrinho(sock, idPeca, quantidadePecas, tamanhoPretendido);
+				//AdicionarCarrinho(sock, idPeca, quantidadePecas, tamanhoPretendido);
 			}
 		}
 	}
@@ -763,6 +841,9 @@ public class ClienteTCP {
 		} // end finally
 
 	} // end main
+
+
+
 
 } // end ClienteTCP
 

@@ -36,9 +36,9 @@ public class Utilizador extends HttpServlet {
 			if(tipoUtilizador.equals("Cliente")){
 
 		        out.println("<h3><a href='Equipamentos?seccao=Homem'>Equipamentos Masculinos</a></h3>");
-		        out.println("<h3>Equipamentos Femininos</h3>");
-		        out.println("<h3>Equipamentos Criança</h3>");
-		        out.println("<h3>Acessórios</h3>");
+		        out.println("<h3><a href='Equipamentos?seccao=Mulher'>Equipamentos Femininos</a></h3>");
+		        out.println("<h3><a href='Equipamentos?seccao=Criança'>Equipamentos Criança</a></h3>");
+		        out.println("<h3><a href='Equipamentos?seccao=Acessorios'>Acessórios</a></h3>");
 		        out.println("<h3>Ver Carrinho de Compras</h3>");
 		        out.println("<h3><a href='TerminarSessao'>Terminar Sessão</a></h3>");
 
@@ -46,9 +46,8 @@ public class Utilizador extends HttpServlet {
 			
 			else if(ClienteTCP.utilizador.getChildNodes().item(0).getAttributes().getNamedItem("Local").getTextContent().equals("Loja")) {
 				
-				out.println("<h3>Adicionar nova peça</h3>");
-				out.println("<h3>Modificar preço de peça existente</h3>");
-				out.println("<h3>Modificar quantidade de peça existente</h3>");
+				out.println("<h3><a href='InserirPeca'>Adicionar nova peça</a></h3>");
+				out.println("<h3><a href='ModificarPeca'>Modificar peça existente</a></h3>");
 				out.println("<h3><a href='TerminarSessao'>Terminar Sessão</a></h3>");
 				
 			}

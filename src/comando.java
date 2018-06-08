@@ -92,26 +92,37 @@ public class comando {
 		}
 	}
 	
-	public Document requestCarrinhos() {
-		Element carrinhos = cmd.createElement("carrinhos");
+	public Document requestCarrinho(String nif) {
+		Element carrinhos = cmd.createElement("carrinho");
 		Element request = cmd.createElement("request");
 		carrinhos.appendChild(request);
+		
 		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
+		
 		protocol.appendChild(carrinhos);
+		
+		Element nifElem = cmd.createElement("nif");
+		nifElem.appendChild(cmd.createTextNode(nif));
+		
+		request.appendChild(nifElem);
 		return cmd;
 	}
 	
-	public Document replyCarrinhos() {
+	public Document replyCarrinho() {
 		Document utilizadores = Loja.getUtilizadores();
+		String nif = cmd.getElementsByTagName("nif").item(0).getTextContent();
 		Element reply = cmd.createElement("reply");
 		
-		NodeList carrinhos = utilizadores.getElementsByTagName("Carrinho");
+		NodeList todosUtilizadores = utilizadores.getElementsByTagName("Utilizador");
 		
-		for(int i = 0; i < carrinhos.getLength(); i++) {
-			Element clone = (Element) cmd.importNode(carrinhos.item(i), true);
-			reply.appendChild(clone);
+		for(int i = 0; i < todosUtilizadores.getLength(); i++) {
+			if(todosUtilizadores.item(i).getAttributes().getNamedItem("NIF").getTextContent().equals(nif)) {
+				Node carrinhoUtilizador = ((Element)todosUtilizadores.item(i)).getElementsByTagName("Carrinho").item(0);
+				Element clone = (Element) cmd.importNode(carrinhoUtilizador, true);
+				reply.appendChild(clone);
+			}
 		}
-		Element carrinhosReply = (Element) cmd.getElementsByTagName("carrinhos").item(0);
+		Element carrinhosReply = (Element) cmd.getElementsByTagName("carrinho").item(0);
 		carrinhosReply.appendChild(reply);
 		return cmd;
 	}
@@ -169,6 +180,40 @@ public class comando {
 		}
 		Element login = (Element)cmd.getElementsByTagName("login").item(0);
 		login.appendChild(reply);
+		return cmd;
+	}
+	
+	public Document requestPecaID(String idPeca) {
+		Element pecaID = cmd.createElement("pecaID");
+		Element request = cmd.createElement("request");
+		
+		pecaID.appendChild(request);
+		
+		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
+		protocol.appendChild(pecaID);
+		
+		Element idPecaElem = cmd.createElement("idPeca");
+		idPecaElem.appendChild(cmd.createTextNode(idPeca));
+		request.appendChild(idPecaElem);
+		
+		return cmd;
+	}
+	
+	public Document replyPecaID() {
+		Document pecas = Loja.getPecas();
+		NodeList todasPecas = pecas.getElementsByTagName("Peça");
+		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
+		Element reply = cmd.createElement("reply");
+		for(int i = 0; i < todasPecas.getLength(); i++) {
+			if(todasPecas.item(i).getAttributes().getNamedItem("idPeça").getTextContent().equals(idPeca)) {
+				Element clone = (Element) cmd.importNode(todasPecas.item(i), true);
+				reply.appendChild(clone);
+			}
+		}
+		Element pecaID = (Element)cmd.getElementsByTagName("pecaID").item(0);
+		pecaID.appendChild(reply);
+		
+		
 		return cmd;
 	}
 	
@@ -274,7 +319,8 @@ public class comando {
 		
 		if(carrinho != null) {
 			carrinho.appendChild(pecaElem);
-			reply.appendChild(carrinho);
+			Element clone = (Element)cmd.importNode(carrinho, true);
+			reply.appendChild(clone);
 		}
 		else {
 			Element carrinhoElem = todosUtilizadores.createElement("Carrinho");
@@ -286,14 +332,13 @@ public class comando {
 		
 		Element adicionarCarrinho = (Element)cmd.getElementsByTagName("adicionarCarrinho").item(0);
 		adicionarCarrinho.appendChild(reply);
-		XMLDoc.writeDocument(todosUtilizadores, "utilizadoresCarrinho.xml");
 		try {
 			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
 				//todosUtilizadores.getDocumentElement().removeChild(utilizador);
 				//reply.appendChild(utilizadorVazio);
 				return cmd;
 			}
-			XMLDoc.writeDocument(todosUtilizadores, "utilizadorCarrinho.xml");
+			XMLDoc.writeDocument(todosUtilizadores, "utilizador.xml");
 			
 			/*NodeList todosUtilizadores = todosUtilizadores.getElementsByTagName("Utilizador");
 			for(int i = 0; i < todosUtilizadores.getLength(); i++) {
@@ -311,41 +356,6 @@ public class comando {
 		}
 	}
 	
-	public Document requestPecaByID(String idPeca) {
-		Element pecaByID = cmd.createElement("pecaByID");
-		Element request = cmd.createElement("request");
-		pecaByID.appendChild(request);
-		
-		Element idPecaElem = cmd.createElement("idPeca");
-		
-		idPecaElem.appendChild(cmd.createTextNode(idPeca));
-		
-		request.appendChild(idPecaElem);
-		
-		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
-		protocol.appendChild(pecaByID);
-		return cmd;
-	}
-	
-	public Document replyPecaByID() {
-		//TODO
-		Document pecas = Loja.getPecas();
-		NodeList todasPecas = pecas.getElementsByTagName("Peça");
-		
-		Element reply = cmd.createElement("reply");
-		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
-		
-		for(int i = 0; i < todasPecas.getLength(); i++) {
-			if(todasPecas.item(i).getAttributes().getNamedItem("idPeca").getTextContent().equals(idPeca)) {
-				Element pecaClone = (Element)cmd.importNode(todasPecas.item(i), true);
-				reply.appendChild(pecaClone);
-			}
-		}
-		Element pecaByID = (Element) cmd.getElementsByTagName("pecaByID").item(0);
-		
-		pecaByID.appendChild(reply);
-		return cmd;
-	}
 		
 	public Document requestTodosCarrinhos() {
 		Element todosCarrinhos = cmd.createElement("mostrarTodosCarrinhos");
@@ -520,7 +530,7 @@ public class comando {
 	}
 	
 	
-	public Document requestAdicionarPeca(String designacao, String seccao, String preco, String tipo) {
+	public Document requestAdicionarPeca(String seccao, String tipo, String designacao, String marca, String descricao, String preco, String base64) {
 		Element adicionarPeca = cmd.createElement("adicionarPeca");
 		Element request = cmd.createElement("request");
 		adicionarPeca.appendChild(request);
@@ -529,16 +539,25 @@ public class comando {
 		Element seccaoElem = cmd.createElement("seccao");
 		Element precoElem = cmd.createElement("preco");
 		Element tipoElem = cmd.createElement("tipo");
+		Element marcaElem = cmd.createElement("marca");
+		Element descricaoElem = cmd.createElement("descricao");
+		Element base64Elem = cmd.createElement("foto");
 		
 		designacaoElem.appendChild(cmd.createTextNode(designacao));
 		seccaoElem.appendChild(cmd.createTextNode(seccao));
 		precoElem.appendChild(cmd.createTextNode(preco));
 		tipoElem.appendChild(cmd.createTextNode(tipo));
+		marcaElem.appendChild(cmd.createTextNode(marca));
+		descricaoElem.appendChild(cmd.createTextNode(descricao));
+		base64Elem.appendChild(cmd.createTextNode(base64));
 		
 		request.appendChild(designacaoElem);
 		request.appendChild(seccaoElem);
 		request.appendChild(precoElem);
 		request.appendChild(tipoElem);
+		request.appendChild(marcaElem);
+		request.appendChild(descricaoElem);
+		request.appendChild(base64Elem);
 		
 		Element protocol = (Element)cmd.getElementsByTagName("protocol").item(0);
 		protocol.appendChild(adicionarPeca);
@@ -551,6 +570,9 @@ public class comando {
 		String seccao = cmd.getElementsByTagName("seccao").item(0).getTextContent();
 		String preco = cmd.getElementsByTagName("preco").item(0).getTextContent();
 		String tipo = cmd.getElementsByTagName("tipo").item(0).getTextContent();
+		String marca = cmd.getElementsByTagName("marca").item(0).getTextContent();
+		String descricao = cmd.getElementsByTagName("descricao").item(0).getTextContent();
+		String fotoBase64 = cmd.getElementsByTagName("foto").item(0).getTextContent();
 		
 		int maxID = 0;
 		for(int i = 0; i < pecas.getElementsByTagName("Peça").getLength(); i++) {
@@ -566,15 +588,17 @@ public class comando {
 		Element descricaoElem = pecas.createElement("Descrição");
 		Element caractElem = pecas.createElement("Caracteristica");
 		Element tipoElem = pecas.createElement(tipo);
-	
+		
 	
 		pecaElem.setAttribute("idPeça", String.valueOf(idPecaCriar));
 		pecaElem.setAttribute("Designação", designacao);
-		pecaElem.setAttribute("Marca", "");
+		pecaElem.setAttribute("Marca", marca);
 		pecaElem.setAttribute("Secção", seccao);
 		pecaElem.setAttribute("Preço", preco);
 		
+		caractElem.appendChild(pecas.createTextNode(descricao));
 		descricaoElem.appendChild(caractElem);
+		fotoElem.appendChild(pecas.createTextNode(fotoBase64));
 		pecaElem.appendChild(fotoElem);
 		pecaElem.appendChild(descricaoElem);
 		pecaElem.appendChild(tipoElem);
@@ -807,8 +831,24 @@ public class comando {
 		if(cmd.getElementsByTagName("aprovarCarrinho").getLength()==1)
 			com = replyAprovarCarrinho();
 		
-		if(cmd.getElementsByTagName("pecaByID").getLength()==1)
-			com = replyPecaByID();
+		if(cmd.getElementsByTagName("pecaID").getLength()==1)
+			com = replyPecaID();
+		
+		if(cmd.getElementsByTagName("adicionarPeca").getLength()==1)
+			com = replyAdicionarPeca();
+		
+		if(cmd.getElementsByTagName("adicionarCarrinho").getLength()==1)
+			com = replyAdicionarCarrinho();
+		
+		if(cmd.getElementsByTagName("carrinho").getLength()==1)
+			com = replyCarrinho();
+		
+		if(cmd.getElementsByTagName("modificarPreco").getLength()==1)
+			com = replyModificarPreco();
+		
+		if(cmd.getElementsByTagName("modificarQuantidade").getLength()==1)
+			com = replyModificarQuantidade();
+
 		
 		if(com==null)
 			return cmd;

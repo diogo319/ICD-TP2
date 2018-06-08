@@ -2,7 +2,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,30 +39,34 @@ public class Equipamentos extends HttpServlet {
         		"}\r\n" +
         		"</style></head>");
         out.println("<body>");
+
         NodeList pecas = ClienteTCP.Catalogo(seccao);
-        
+
+    	System.out.println(pecas.getLength());
         for(int i = 0; i < pecas.getLength(); i++) {
-        	out.println("<h1>" + pecas.item(i).getAttributes().getNamedItem("Designação").getTextContent() + "</h1>");
+        	String idPeca = pecas.item(i).getAttributes().getNamedItem("idPeça").getTextContent();
+        	out.println("<h1><a href='PaginaEquipamento?idPeca=" + idPeca + "'>" + pecas.item(i).getAttributes().getNamedItem("Designação").getTextContent() + "</a></h1>");
         	String image = ((Element)pecas.item(i)).getElementsByTagName("Foto").item(0).getTextContent();
         	String descricao = ((Element)pecas.item(i)).getElementsByTagName("Caracteristica").item(0).getTextContent();
         	String preco = pecas.item(i).getAttributes().getNamedItem("Preço").getTextContent();
         	out.println("<img src='data:image/jpg;base64, " + image + "' width='200px' height='auto'></img>");
-        	out.println("<table><tr><th>Descrição</th><td>" + descricao + "</td></tr>");
+        	out.println("<br><table><tr><th>Descrição</th><td>" + descricao + "</td></tr>");
         	out.println("<tr><th>Preço</th><td align='center'>" + preco + "</td></tr>");
         	
-        	NodeList tamanhos = ((Element)pecas.item(i)).getElementsByTagName("Tamanho");
-        	out.println("<tr><th rowspan='" + tamanhos.getLength() +"'>Tamanhos</th><td align='center'>"+ tamanhos.item(0).getAttributes().getNamedItem("Valor").getTextContent() +"</td>");
-        	out.println("<td><input type='checkbox' name='valor'></input></td></tr>");
-        	
-        	for(int j = 1; j < tamanhos.getLength(); j++) {
-            	out.println("<tr><td align='center'>"+ tamanhos.item(j).getAttributes().getNamedItem("Valor").getTextContent() +"</td>");
-            	out.println("<td><input type='checkbox' name='valor'></input></td></tr>");
+        	if(!seccao.equals("Acessorios")) {
+        		
+        		NodeList tamanhos = ((Element)pecas.item(i)).getElementsByTagName("Tamanho");
+            	out.println("<tr><th rowspan='" + tamanhos.getLength() +"'>Tamanhos</th><td align='center'>"+ tamanhos.item(0).getAttributes().getNamedItem("Valor").getTextContent() +"</td>");
+            	
+            	for(int j = 1; j < tamanhos.getLength(); j++) {
+                	out.println("<tr><td align='center'>"+ tamanhos.item(j).getAttributes().getNamedItem("Valor").getTextContent() +"</td>");
+            	}
         	}
+        	
         	
         	out.println("</table><br>");
         }
         
-        out.println("<br><input type='submit' value='Adicionar Carrinho'></input>");
         
         out.println("</body></html>");
 	}
