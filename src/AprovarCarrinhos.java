@@ -30,6 +30,7 @@ public class AprovarCarrinhos extends HttpServlet {
         out.println("<html>");
        
 		out.println("<head><title>Carrinhos Aprovados</title></head><body>");
+		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
 		
 		String[] nifs = request.getParameterValues("nif");
 

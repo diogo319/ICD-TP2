@@ -26,6 +26,7 @@ public class InserirPeca extends HttpServlet {
 		
         out.println("<html>");
         out.println("<head><title>Dados da Peça</title></head><body>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
         out.println("<h1>Dados da Peça</h1>");
         
         out.println("<form action='ProcessarInsercao'>");

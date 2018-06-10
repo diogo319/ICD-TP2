@@ -33,6 +33,7 @@ public class ModificarPeca extends HttpServlet {
 		
         out.println("<html>");
         out.println("<head><title>Modificar Peça</title></head><body><h1>Modificar Peça:</h1>");
+        out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
         
         NodeList pecasHomem = ClienteTCP.Catalogo("Homem");
         

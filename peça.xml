@@ -7,7 +7,7 @@
 		</Descrição>
 		<Vestuario>
 			<Tamanho Quantidade="20" Valor="XL"/>
-			<Tamanho Quantidade="10" Valor="L"/>
+			<Tamanho Quantidade="7" Valor="L"/>
 			<Tamanho Quantidade="0" Valor="M"/>
 			<Tamanho Quantidade="2" Valor="S"/>
 		</Vestuario>
@@ -30,7 +30,7 @@
 			<Caracteristica>Cor Azul, Reebok, Sapatilhas ideiais para corridas e caminhadas</Caracteristica>
 		</Descrição>
 		<Calcado>
-			<Tamanho Quantidade="12" Valor="45"/>
+			<Tamanho Quantidade="11" Valor="45"/>
 			<Tamanho Quantidade="10" Valor="44"/>
 			<Tamanho Quantidade="8" Valor="43"/>
 			<Tamanho Quantidade="4" Valor="42"/>
@@ -45,7 +45,7 @@
 		</Descrição>
 		<Calcado>
 			<Tamanho Quantidade="12" Valor="41"/>
-			<Tamanho Quantidade="7" Valor="40"/>
+			<Tamanho Quantidade="6" Valor="40"/>
 			<Tamanho Quantidade="6" Valor="39"/>
 			<Tamanho Quantidade="2" Valor="38"/>
 			<Tamanho Quantidade="4" Valor="37"/>
@@ -60,7 +60,7 @@
 		<Vestuario>
 			<Tamanho Quantidade="5" Valor="XL"/>
 			<Tamanho Quantidade="5" Valor="L"/>
-			<Tamanho Quantidade="19" Valor="M"/>
+			<Tamanho Quantidade="18" Valor="M"/>
 			<Tamanho Quantidade="10" Valor="S"/>
 		</Vestuario>
 	</Peça>

@@ -26,8 +26,11 @@ public class TerminarSessao extends HttpServlet {
 		ClienteTCP.utilizador = null;
 		
 		out.println("<html><head><title>Sessão Terminada</title></head>");
-		
-		out.println("<body><h3><a href='index.html'>Voltar à Home Page</a></h3></body>");
+		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+        
+        out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
+        		+ "<nav><ul><li><a id=\"active\" href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
+        		+ "</li></ul></nav></div>");
 		
 		out.println("</html>");
 	}

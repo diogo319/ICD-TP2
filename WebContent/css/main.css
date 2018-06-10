@@ -1,0 +1,261 @@
+/* ================================== cabecalho da pagina ================================== */
+.cabecalho{
+	background: #ffffff;
+    display:table ;
+}
+
+.cabecalho img{
+    display:table-cell;
+}
+
+/* menus */
+.cabecalho nav{
+	background: #d52222;
+	text-align: left;
+	padding: 0px 25px;
+    width: 100%;
+    display:table-cell;
+}
+.cabecalho nav ul{
+	background: #d52222;
+	padding: 0;
+}
+.cabecalho nav li{
+	vertical-align:bottom;
+	display: inline-block;
+	margin: 0 25px 0 0;
+}
+.cabecalho nav a{
+	color: #fff;
+	font-size: 25px;
+	text-decoration: none;
+    font-family: Arial, Helvetica;
+	padding: 15px;
+}
+.cabecalho nav a:hover{
+	background: #671613;
+    
+}
+.cabecalho nav #active{
+	background: #671613;
+}
+
+
+
+/* ================================== dropdown ================================== */
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+	vertical-align:bottom;
+	display: inline-block;
+	margin: 0 0px 0 0;
+	font-size: 25px;
+	text-decoration: none;
+    font-family: Arial, Helvetica;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0px;
+    background-color: #d52222;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #d52222;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #404040;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+	color: #fff;
+	font-size: 25px;
+	text-decoration: none;
+    font-family: Arial, Helvetica;
+	padding: 15px;
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* ================================== Login ================================== */
+
+#loginForm{
+	margin: 60px 35%;
+	padding: 0;
+	display: block;
+}
+.input{
+	display: block;
+	width: 60%;
+	height: 50px;
+	margin: 5px auto;
+	border: 1px solid #a0a0a0;
+	box-shadow: none;
+	padding: 0 15px 0 15px;
+}
+.button{
+	border: 0;
+	box-shadow: none;
+	border-radius: 5px;
+	display: block;
+	width: 60%;
+	height: 50px;
+	margin: 20px auto 0 auto;
+	padding: 0 15px 0 15px;
+	background: #671613;
+	color: #ffffff;
+}
+.text{
+	font-size: 15px;
+	margin: 10px auto;
+	text-align: center;
+}
+
+/* ================================== body ================================== */
+
+.corpo{
+	font-family: arial;
+	margin: 60 15%;
+}
+
+
+/* ================================== tables ================================== */
+
+#tables {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+    margin: 60 15%;
+}
+
+#tables td, #tables th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#tables tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+#tables tr:hover {
+	background-color: #ddd;
+}
+
+#tables th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #d52222;
+    color: white;
+}
+
+/* ================================== tables items ================================== */
+
+#itemtables {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 60 15%;
+}
+
+#itemtables td, #itemtables th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#itemtables tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+#itemtables tr:hover {
+	background-color: #ddd;
+}
+
+#itemtables th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #d52222;
+    color: white;
+}
+
+/* ================================== tables items 2 ================================== */
+
+#itemtablesdois {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    margin: 40 20%;
+}
+
+#itemtablesdois td, #itemtablesdois th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#itemtablesdois tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+#itemtablesdois tr:hover {
+	background-color: #ddd;
+}
+
+#itemtablesdois th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #d52222;
+    color: white;
+}
+
+.button2{
+	border: 0;
+	box-shadow: none;
+	border-radius: 5px;
+	display: block;
+	width: 20%;
+	height: 50px;
+	margin: 20px auto 0 auto;
+	padding: 0 15px 0 15px;
+	background: #671613;
+	color: #ffffff;
+}
+/* ================================== tables imagens ================================== */
+
+#imagetables {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    margin: 60 15%;
+}
+
+/* ================================== imagens ================================== */
+.imagens {
+	font-family: arial;
+	margin: 40 44% 0;
+}

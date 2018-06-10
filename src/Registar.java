@@ -24,12 +24,17 @@ public class Registar extends HttpServlet {
 		PrintWriter out = response.getWriter();
 				
 		out.println("<html><head><title>Registar</title></head>");
+		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+		
+		out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
+        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a id=\"active\" href=\"Registar\">Registar</a>"
+        		+ "</li></ul></nav></div>");
 				
-		out.println("<body><form action='NovoUtilizador'>");
-		out.println("NIF: <input type='text' placeholder='1234' name='nif'></input><br>");
-        out.println("Nome: <input type='text' name='nome'></input><br>");
-        out.println("Data Nascimento: <input type='date' name='dataNasc' required></input><br>");
-        out.println("<input type='submit' value='Registar'></input><br>");
+		out.println("<body><form id=\"loginForm\" action='NovoUtilizador'>");
+        out.println("<input class=\"input\" type='text' placeholder='Insira o seu NIF' name='nif' required></input>");
+        out.println("<input class=\"input\" type='text' placeholder='Primeiro e Ultimo Nome' name='nome' required></input>");
+        out.println("<input  class=\"input\" type='date' placeholder='Data de Nascimento' name='dataNasc' required></input>");
+        out.println("<input class=\"button\" type='submit' value='Registar'></input>");
         out.println("</form>");
 
         out.println("</body>");

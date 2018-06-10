@@ -28,6 +28,7 @@ public class NovoUtilizador extends HttpServlet {
 		String dataNasc = request.getParameter("dataNasc");
 		
 		out.println("<html><head><title>Registar</title></head>");
+		out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
 				
 		out.println("<body>");
 		if(ClienteTCP.validarNif(nif) && ClienteTCP.Registar(nif, nome, dataNasc)) {

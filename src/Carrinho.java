@@ -31,6 +31,29 @@ public class Carrinho extends HttpServlet {
         
         out.println("<html>");
         out.println("<head><title>Carrinho</title></head>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+		out.println("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
+        
+        out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><div class=\"dropdown\"><button class=\"dropbtn\">Equipamentos <i class=\"fa fa-caret-down\"></i></button>" 
+				+"        <div class=\"dropdown-content\">" 
+				+"          <a href=\"Equipamentos?seccao=Homem\">Homem</a>" 
+				+"          <a href=\"Equipamentos?seccao=Mulher\">Mulher</a>" 
+				+"          <a href=\"Equipamentos?seccao=Crianca\">Criança</a>" 
+				+"        </div>" 
+				+"      </div>"
+				+"      </li>" 
+				+"      <li><a href=\"Equipamentos?seccao=Acessorios\">Acessórios</a></li>" 
+				+"      <li><a href=\"AdicionarPecasCarrinho?idPeca=vazio\">Carrinho</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div>");
+        
         out.println("<body>");
         
         String[] idPeca = request.getParameterValues("idPeca");
@@ -39,14 +62,14 @@ public class Carrinho extends HttpServlet {
         for(int i = 0; i < idPeca.length; i++) {
     		Node peca = ClienteTCP.PecaID(idPeca[i]);
     		
-    		out.println("<h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1>");
+    		out.println("<div class='corpo'><h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1></div>");
         	String image = ((Element)peca).getElementsByTagName("Foto").item(0).getTextContent();
         	String descricao = ((Element)peca).getElementsByTagName("Caracteristica").item(0).getTextContent();
         	String preco = peca.getAttributes().getNamedItem("Preço").getTextContent();
-        	out.println("<img src='data:image/jpg;base64, " + image + "' width='200px' height='auto'></img>");
+        	out.println("<img class='imagens' src='data:image/jpg;base64, " + image + "' width='200px' height='auto'></img>");
         	
-        	out.println("<form action='AdicionarPecasCarrinho?idPeca=" + idPeca[i] + "'><br><table>");
-        	out.println("<tr><th>Preço</th><td align='center'>" + preco + "</td></tr>");
+        	out.println("<form action='AdicionarPecasCarrinho?idPeca=" + idPeca[i] + "'><br><table id='itemtablesdois'>");
+        	out.println("<tr><th>Preço</th><td align='center'>" + preco + "&euro;" + "</td></tr>");
         	
         	String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
         	
@@ -62,11 +85,17 @@ public class Carrinho extends HttpServlet {
     	        	out.println("<td><input type='number' name='quantidade'></input></td></tr>");
     	    	}
     			
+        	}else {
+
+        		out.println("<input type='hidden' name='valor'></input>");    	    	
+	        	out.println("<tr><td align='center'>Quantidade</td>");
+	        	out.println("<td><input type='number' name='quantidade'></input></td></tr>");
+	    	
         	}
         	
         	out.println("</table><br>");		
         	out.println("<input type='hidden' name='idPeca' value='" + idPeca[i] + "'></input>");
-        	out.println("<input type='submit' value='Adicionar Carrinho'></input></form>");
+        	out.println("<input class='button' type='submit' value='Adicionar Carrinho'></input></form>");
         }
         
         out.println("</body></html>");

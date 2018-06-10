@@ -38,6 +38,8 @@ public class ConsultarCarrinhos extends HttpServlet {
 				"    padding: 5px;\r\n" + 
 				"}\r\n" + 
 				"</style></head>");
+		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+		
 		out.println("<body><h1>Carrinhos por aprovar:</h1>");
 		out.println("<form action='AprovarCarrinhos'>");
 		NodeList carrinhos = ClienteTCP.mostrarTodosCarrinhos();

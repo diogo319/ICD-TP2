@@ -46,6 +46,7 @@ public class ProcessarInsercao extends HttpServlet {
         
 		out.println("<html>");
         out.println("<head><title>Equipamento Inserido</title></head>");
+        out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
         out.println("<body>");
         
         

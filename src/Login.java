@@ -26,11 +26,15 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head><title>Login</title></head>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+        
+        out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
+        		+ "<nav><ul><li><a id=\"active\" href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
+        		+ "</li></ul></nav></div>");
 
-        out.println("<body><form action='Utilizador'>");
-        out.println("NIF: <input type='text' placeholder='1244' name='nif'></input><br>");
-        out.println("Password: <input type='password'></input><br>");
-        out.println("<input type='submit' value='Login'></input><br>");
+        out.println("<body><form id=\"loginForm\" action='Utilizador'>");
+        out.println("<input class=\"input\" type='text' placeholder='Insira o seu NIF' name='nif'></input>");
+        out.println("<input class=\"button\" type='submit' value='Login'></input><br>");
         out.println("</form>");
 
         out.println("</body>");

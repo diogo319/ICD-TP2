@@ -45,27 +45,10 @@ public class AlterarParametros extends HttpServlet {
 				ClienteTCP.AlterarQuantidade(idPeca, valores[i], quantidadesNovas[i]);
 			}
 		}
-		//TODO extra para testar se foi alterada com sucesso
-		/*
-		Node peca = ClienteTCP.PecaID(idPeca);
 		
-		String precoAtualizado = peca.getAttributes().getNamedItem("Preço").getTextContent();
-		String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
-		if(precoAtualizado.equals(precoNovo)) {
-			if(!seccao.equals("Acessorios")) {
-				NodeList tamanhos = ((Element)peca).getElementsByTagName("Tamanho");
-				for(int i = 0; i < valores.length; i++) {
-					if(!tamanhos.item(i).getAttributes().getNamedItem("Quantidade").getTextContent().equals(quantidadesNovas[i])) {
-						out.println("<h2>Peça não alterada</h2>");
-						break;
-					}
-				}
-				
-			}
-		}
-		*/
         out.println("<html>");
         out.println("<head><title>Peça Modificada</title></head><body>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
 
 		out.println("<h2>Peça alterada com sucesso.</h2>");
 		out.println("<h3><a href='ModificarPeca'>Voltar atrás</a></h3>");

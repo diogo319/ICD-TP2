@@ -29,32 +29,52 @@ public class AdicionarPecasCarrinho extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         out.println("<html>");
-        out.println("<head><title>Carrinho</title><style>\r\n"+
-        			"table, th, td {\r\n"+
-        			"border: 1px solid black;\r\n"+
-        			"border-collapse: collapse;\r\n"+
-        			"}\r\n"+
-        			"th, td {\r\n"+
-        			"padding: 5px;\r\n"+
-        			"}\r\n"+
-        			"</style></head>");
-        out.println("<body>");
-        
-        out.println("<h1>Carrinho</h1>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+		out.println("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
+
         
         String idPeca = request.getParameter("idPeca");
-        String[] tamanhos = request.getParameterValues("valor");
-		String[] quantidades = request.getParameterValues("quantidade");
+        String[] tamanhos;
+		String[] quantidades;
 		
 		//TODO Adicionar todas as peças
-		for(int i = 0; i < tamanhos.length; i++) {
-			ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i]);
+		if (!idPeca.equals("vazio")) {
+			
+			tamanhos = request.getParameterValues("valor");
+			quantidades = request.getParameterValues("quantidade");
+			for(int i = 0; i < tamanhos.length; i++) {
+				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i]);
+			}
 		}
+		
+		out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><div class=\"dropdown\"><button class=\"dropbtn\">Equipamentos <i class=\"fa fa-caret-down\"></i></button>" 
+				+"        <div class=\"dropdown-content\">" 
+				+"          <a href=\"Equipamentos?seccao=Homem\">Homem</a>" 
+				+"          <a href=\"Equipamentos?seccao=Mulher\">Mulher</a>" 
+				+"          <a href=\"Equipamentos?seccao=Crianca\">Criança</a>" 
+				+"        </div>" 
+				+"      </div>"
+				+"      </li>" 
+				+"      <li><a href=\"Equipamentos?seccao=Acessorios\">Acessórios</a></li>" 
+				+"      <li><a id='active'>Carrinho</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div>");
+		
+		out.println("<body>");
+        
+        out.println("<div class='corpo'><h1>Carrinho</h1></div>");
 		
 		//TODO mostrar carrinho apos alteraçoes
 		Node carrinho = ClienteTCP.Carrinho();
 		
-		out.println("<table><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th></tr>");
+		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th></tr>");
 		NodeList pecasCarrinho = carrinho.getChildNodes();
 		for(int j = 0; j < pecasCarrinho.getLength(); j++) {
 			String idPecaCarrinho = pecasCarrinho.item(j).getAttributes().getNamedItem("ID").getTextContent();
@@ -64,15 +84,11 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			String tamanho = pecasCarrinho.item(j).getAttributes().getNamedItem("Tamanho").getTextContent();
 			String quantidade = pecasCarrinho.item(j).getAttributes().getNamedItem("Quantidade").getTextContent();
 			//Node peca = ClienteTCP.PecaByID(idPeca);
-			out.println("<tr><th>" + designacao +"</th><th>" + seccao + "</th><th>" + tamanho + "</th><th>" + quantidade + "</th></tr>");
+			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td></tr>");
 			//out.println("<h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1>");
 		}
 		out.println("</table>");
-		
-		out.println("<br>");
-		
-		out.println("<h2><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Voltar à HomePage</a></h2>");
-		
+				
 		out.println("</body></html>");
 	}
 	
