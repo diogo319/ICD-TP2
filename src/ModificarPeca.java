@@ -32,8 +32,20 @@ public class ModificarPeca extends HttpServlet {
 		String idPecaAlterar = request.getParameter("idPeca");
 		
         out.println("<html>");
-        out.println("<head><title>Modificar Peça</title></head><body><h1>Modificar Peça:</h1>");
-        out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
+        out.println("<head><title>Modificar Peça</title></head>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+        
+        out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><a href=\"InserirPeca\">Inserir Peça</a></li>" 
+				+"      <li><a id='active'>Modificar Peça</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div><body><div class='corpo'><h1>Modificar Peça:</h1>");
         
         NodeList pecasHomem = ClienteTCP.Catalogo("Homem");
         
@@ -99,7 +111,7 @@ public class ModificarPeca extends HttpServlet {
 
             out.println("<br><br><input type='submit' value='Alterar Peça'></input></form>");
         }
-        out.println("</body></html>");
+        out.println("</div></body></html>");
 	}
 
 	/**

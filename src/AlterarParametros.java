@@ -47,12 +47,22 @@ public class AlterarParametros extends HttpServlet {
 		}
 		
         out.println("<html>");
-        out.println("<head><title>Peça Modificada</title></head><body>");
+        out.println("<head><title>Peça Modificada</title></head>");
         out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+        out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><a href=\"InserirPeca\">Inserir Peça</a></li>" 
+				+"      <li><a href=\"ModificarPeca\">Modificar Peça</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div><body><div class='corpo'>");
 
 		out.println("<h2>Peça alterada com sucesso.</h2>");
-		out.println("<h3><a href='ModificarPeca'>Voltar atrás</a></h3>");
-        out.println("</body></html>");
+        out.println("</div></body></html>");
 	}
 
 	/**

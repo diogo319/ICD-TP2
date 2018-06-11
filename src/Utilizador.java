@@ -99,10 +99,10 @@ public class Utilizador extends HttpServlet {
 		}
 		else  {
 			out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
-	        		+ "<nav><ul><li><a id=\"active\" href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
+	        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
 	        		+ "</li></ul></nav></div>");
 			
-			out.println("<body><div class='corpo'><h2>NIF inexistente no sistema.</h2><h2><a href='index.html'>Voltar à Home Page</a></h2></div>");
+			out.println("<body><div class='corpo'><h2>NIF inexistente no sistema.</h2></div>");
 		}
         out.println("</body>");
         out.println("</html>");		

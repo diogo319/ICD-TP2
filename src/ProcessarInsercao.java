@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * Servlet implementation class ProcessarInsercao
@@ -46,8 +45,19 @@ public class ProcessarInsercao extends HttpServlet {
         
 		out.println("<html>");
         out.println("<head><title>Equipamento Inserido</title></head>");
-        out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
-        out.println("<body>");
+        out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+        out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><a href=\"InserirPeca\">Inserir Peça</a></li>" 
+				+"      <li><a href=\"ModificarPeca\">Modificar Peça</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div><body><div class='corpo'>");
+        
         
         
         if(idPecaInserida.equals("")) {
@@ -58,8 +68,7 @@ public class ProcessarInsercao extends HttpServlet {
         else {
         	out.println("<h1>Equipamento Inserido com Sucesso</h1>");
         }
-    	out.println("<h2><a href='InserirPeca'>Voltar à página anterior</a></h2>");
-        out.println("</body></html>");
+        out.println("</div></body></html>");
 	}
 
 	/**

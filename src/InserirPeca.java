@@ -25,9 +25,23 @@ public class InserirPeca extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
         out.println("<html>");
-        out.println("<head><title>Dados da Peça</title></head><body>");
+        out.println("<head><title>Dados da Peça</title></head>");
         out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
-        out.println("<h1>Dados da Peça</h1>");
+        
+        out.println("<div class=\"cabecalho\">" 
+				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
+				+"  <nav>" 
+				+"    <ul>" 
+				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+				+"      <li><a id='active'>Inserir Peça</a></li>" 
+				+"      <li><a href=\"ModificarPeca\">Modificar Peça</a></li>" 
+				+"      <li><a href=\"TerminarSessao\">Logout</a></li>" 
+				+"    </ul>" 
+				+"  </nav>" 
+				+"</div>");
+        
+        
+        out.println("<body><div class='corpo'><h1>Dados da Peça</h1>");
         
         out.println("<form action='ProcessarInsercao'>");
         out.println("Secção: <select name='seccao' required><option value='Homem'>Homem</option>"
@@ -44,15 +58,15 @@ public class InserirPeca extends HttpServlet {
         
         out.println("<p>Marca: <input name=\'marca\' type=\'text\' placeholder=\'Insira a marca da peça\' required/></p>");
         
-        out.println("<p>Descrição: <textarea name=\'descricao\' rows=\'4\' cols=\'100\' placeholder=\'Insira a descrição do produto\' required></textarea></p>");
+        out.println("<p><textarea name=\'descricao\' rows=\'4\' cols=\'100\' placeholder=\'Insira uma descrição do produto\' required></textarea></p>");
         
-        out.println("<p>Preço: <input type=\'number\' name=\'preco\' required/>Euros</p>");
+        out.println("<p>Preço: <input type=\'number\' name=\'preco\' required/> &euro;</p>");
 	
         out.println("<p>Imagem: <input type=\'file\' name=\'image\' accept=\'image/*\'></p>");
 	
-        out.println("<p><input type=\'submit\' value=\'Adicionar\' ></p>");
+        out.println("<p><input class='button2' type=\'submit\' value=\'Adicionar\' ></p>");
         
-        out.println("</form></body></html>");   
+        out.println("</form></div></body></html>");   
 	}
 
 	/**

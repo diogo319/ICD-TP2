@@ -28,24 +28,23 @@ public class NovoUtilizador extends HttpServlet {
 		String dataNasc = request.getParameter("dataNasc");
 		
 		out.println("<html><head><title>Registar</title></head>");
-		out.println("<link rel=\"stylesheet\" href=\"/css/main.css\" />");
+		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
+		
+		out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
+        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
+        		+ "</li></ul></nav></div>");
 				
-		out.println("<body>");
+		out.println("<body><div class='corpo'>");
 		if(ClienteTCP.validarNif(nif) && ClienteTCP.Registar(nif, nome, dataNasc)) {
-			
-			//ClienteTCP.Login(nif);
-			out.println("<h3>Bem-vindo " + nome + "</h3>");
-			out.println("<h3><a href='Utilizador?nif=" + nif + "'>Login</a></h3>");
-	
+			out.println("<h3>Utilizador " + nome + " registado com sucesso.</h3>");	
 		}
 		
 		else {
 			out.println("<h3>Erro a Registar. Tente de Novo.</h3>");
-			out.println("<h3><a href='index.html'>Voltar à Home Page</a></h3>");
 		}
 		
 		
-        out.println("</body>");
+        out.println("</div></body>");
 		out.println("</html>");
 	}
 	

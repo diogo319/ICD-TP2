@@ -60,7 +60,7 @@
 		<Vestuario>
 			<Tamanho Quantidade="5" Valor="XL"/>
 			<Tamanho Quantidade="5" Valor="L"/>
-			<Tamanho Quantidade="18" Valor="M"/>
+			<Tamanho Quantidade="17" Valor="M"/>
 			<Tamanho Quantidade="10" Valor="S"/>
 		</Vestuario>
 	</Peça>
@@ -71,7 +71,7 @@
 		</Descrição>
 		<Vestuario>
 			<Tamanho Quantidade="5" Valor="12/14"/>
-			<Tamanho Quantidade="4" Valor="10/12"/>
+			<Tamanho Quantidade="3" Valor="10/12"/>
 			<Tamanho Quantidade="5" Valor="8/10"/>
 			<Tamanho Quantidade="5" Valor="6/8"/>
 		</Vestuario>

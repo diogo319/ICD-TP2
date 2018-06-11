@@ -27,7 +27,7 @@ public class Registar extends HttpServlet {
 		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
 		
 		out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
-        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a id=\"active\" href=\"Registar\">Registar</a>"
+        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a id=\"active\">Registar</a>"
         		+ "</li></ul></nav></div>");
 				
 		out.println("<body><form id=\"loginForm\" action='NovoUtilizador'>");

@@ -29,7 +29,7 @@ public class TerminarSessao extends HttpServlet {
 		out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");
         
         out.println("<div class=\"cabecalho\"><img id=\"logo\" src=\"images/RDDSports.png\"/>"
-        		+ "<nav><ul><li><a id=\"active\" href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
+        		+ "<nav><ul><li><a href=\"Login\">Login</a></li><li><a href=\"Registar\">Registar</a>"
         		+ "</li></ul></nav></div>");
 		
 		out.println("</html>");

@@ -62,7 +62,7 @@ public class Equipamentos extends HttpServlet {
     				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
     				+"  <nav>" 
     				+"    <ul>" 
-    				+"      <li><a href='Utilizador?nif=" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
+    				+"      <li><a href='Utilizador?nif='" + ClienteTCP.utilizador.getAttributes().getNamedItem("NIF").getTextContent() + "'>Home</a></li>" 
     				+"      <li><div class=\"dropdown\"><button class=\"dropbtn\">Equipamentos <i class=\"fa fa-caret-down\"></i></button>" 
     				+"        <div class=\"dropdown-content\">" 
     				+"          <a href=\"Equipamentos?seccao=Homem\">Homem</a>" 
