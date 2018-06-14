@@ -567,6 +567,27 @@ public class ClienteTCP {
 		return peca;
 	}
 	
+	public static Node AlterarQuantidadeAcessorio(String idPeca, String quantidadeNova) {
+		Socket sock = null;
+		Node peca = null;
+		
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			Document request = cmd.requestModificarQuantidadeAcessorio(idPeca, quantidadeNova);
+			XMLReadWrite.documentToSocket(request, sock);
+			
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			
+			peca = reply.getElementsByTagName("Peça").item(0);
+		}catch(UnknownHostException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return peca;
+	}
+	
 	public static Node AlterarQuantidade(String idPeca, String valor, String quantidadeNova) {
 		Socket sock = null;
 		Node peca = null;

@@ -50,7 +50,7 @@ public class ModificarPeca extends HttpServlet {
         NodeList pecasHomem = ClienteTCP.Catalogo("Homem");
         
         out.println("<form><select name='idPeca' onchange='this.form.submit()'>");
-
+        out.println("<option selected disabled>Peça a Alterar:</option>");
     	out.println("<option disabled>Homem</option>");
         for(int i = 0; i < pecasHomem.getLength(); i++) {
         	String idPeca = pecasHomem.item(i).getAttributes().getNamedItem("idPeça").getTextContent();
@@ -107,6 +107,13 @@ public class ModificarPeca extends HttpServlet {
             		out.println("<input type='hidden' name='quantidadeAntiga' value='" + quantidade + "'></input>");
             		out.println(valor + ": <input type='number' name='quantidadeNova' value='" + quantidade + "'></input>");
             	}
+            }
+            else {
+            	out.println("<p>Quantidade: </p>");
+            	String valor = "";
+            	String quantidade = ((Element)peca).getElementsByTagName("Quantidade").item(0).getAttributes().getNamedItem("Quantidade").getTextContent();
+        		out.println("<input type='hidden' name='quantidadeAntiga' value='" + quantidade + "'></input>");
+        		out.println("<input type='number' name='quantidadeNova' value='" + quantidade + "'></input>");
             }
 
             out.println("<br><br><input type='submit' value='Alterar Peça'></input></form>");

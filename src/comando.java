@@ -699,6 +699,72 @@ public class comando {
 			return cmd;
 		}
 	}
+
+	public Document requestModificarQuantidadeAcessorio(String idPeca, String quantidade) {
+		Element modificarQuantidade = cmd.createElement("modificarQuantidadeAcessorio");
+		Element request = cmd.createElement("request");
+		modificarQuantidade.appendChild(request);
+		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
+		protocol.appendChild(modificarQuantidade);
+		
+		Element idPecaElem = cmd.createElement("idPeca");
+		Element quantidadeElem = cmd.createElement("quantidade");
+		
+		idPecaElem.appendChild(cmd.createTextNode(idPeca));
+		quantidadeElem.appendChild(cmd.createTextNode(quantidade));
+		
+		request.appendChild(idPecaElem);
+		request.appendChild(quantidadeElem);
+		return cmd;
+	}
+	
+	public Document replyModificarQuantidadeAcessorio() {
+		Document pecas = Loja.getPecas();
+		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
+		String quantidade = cmd.getElementsByTagName("quantidade").item(0).getTextContent();
+		
+		Node peca = null;
+		for(int i = 0; i < pecas.getElementsByTagName("Peça").getLength(); i++) {
+			if(pecas.getElementsByTagName("Peça").item(i).getAttributes().getNamedItem("idPeça").getTextContent().equals(idPeca)) {
+				peca = pecas.getElementsByTagName("Peça").item(i);
+				break;
+			}
+		}
+		Element reply = cmd.createElement("reply");
+		Element quantidadeClone = (Element) ((Element)peca).getElementsByTagName("Quantidade").item(0);
+		String oldQuantidade = quantidadeClone.getAttribute("Quantidade");
+		quantidadeClone.removeAttribute("Quantidade");
+		quantidadeClone.setAttribute("Quantidade", quantidade);
+		XMLDoc.writeDocument(pecas, "peça.xml");
+		if(!XMLDoc.validDocXSD("peça.xml", "peça.xsd")) {
+			quantidadeClone.setAttribute("Quantidade", oldQuantidade);
+			XMLDoc.writeDocument(pecas, "peça.xml");	
+			Element pecaClone = (Element)cmd.importNode(peca, true);
+			
+			Element modificarQuantidade = (Element)cmd.getElementsByTagName("modificarQuantidadeAcessorio").item(0);
+			
+			reply.appendChild(pecaClone);
+			
+			modificarQuantidade.appendChild(reply);
+			
+			return cmd;
+		}
+		else {
+			
+			Element pecaClone = (Element)cmd.importNode(peca, true);
+			
+			Element modificarQuantidade = (Element)cmd.getElementsByTagName("modificarQuantidadeAcessorio").item(0);
+			
+			reply.appendChild(pecaClone);
+			
+			modificarQuantidade.appendChild(reply);
+			
+			return cmd;
+		}
+	
+		
+	}
+	
 	
 	public Document requestModificarQuantidade(String idPeca, String tamanho, String quantidade) {
 		Element modificarQuantidade = cmd.createElement("modificarQuantidade");
@@ -848,7 +914,9 @@ public class comando {
 		
 		if(cmd.getElementsByTagName("modificarQuantidade").getLength()==1)
 			com = replyModificarQuantidade();
-
+		
+		if(cmd.getElementsByTagName("modificarQuantidadeAcessorio").getLength()==1)
+			com = replyModificarQuantidadeAcessorio();
 		
 		if(com==null)
 			return cmd;

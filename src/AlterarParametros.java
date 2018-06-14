@@ -39,13 +39,18 @@ public class AlterarParametros extends HttpServlet {
 		if(!precoNovo.equals(precoAntigo)) {
 			ClienteTCP.AlterarPreco(idPeca, precoNovo);
 		}
-		
-		for(int i = 0; i < valores.length; i++) {
-			if(!quantidadesNovas[i].equals(quantidadesAntigas[i])) {
-				ClienteTCP.AlterarQuantidade(idPeca, valores[i], quantidadesNovas[i]);
+		if(valores == null) {
+			if(!quantidadesNovas[0].equals(quantidadesAntigas[0])) {
+				ClienteTCP.AlterarQuantidadeAcessorio(idPeca, quantidadesNovas[0]);
 			}
 		}
-		
+		else {
+			for(int i = 0; i < valores.length; i++) {
+				if(!quantidadesNovas[i].equals(quantidadesAntigas[i])) {
+					ClienteTCP.AlterarQuantidade(idPeca, valores[i], quantidadesNovas[i]);
+				}
+			}
+		}
         out.println("<html>");
         out.println("<head><title>Peça Modificada</title></head>");
         out.println("<link rel=\"stylesheet\" href=\"css/main.css\" />");

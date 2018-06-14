@@ -46,7 +46,7 @@ public class InserirPeca extends HttpServlet {
         out.println("<body><div class='corpo'><h1>Dados da Peça</h1>");
         if(seccao == null) {
 	        out.println("<form action='InserirPeca'>");
-	        out.println("Secção: <select name='seccao' onchange='this.form.submit()'><option value='Homem'>Homem</option>"
+	        out.println("Dados Peça Inserir: <select name='seccao' onchange='this.form.submit()'><option selected disabled>Secção:</option><option value='Homem'>Homem</option>"
 	        		+ "<option value='Mulher'>Mulher</option>"
 	        		+ "<option value='Crianca'>Criança</option>"
 	        		+ "<option value='Acessorios'>Acessórios</option>"
