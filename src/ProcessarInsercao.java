@@ -37,6 +37,9 @@ public class ProcessarInsercao extends HttpServlet {
 		byte[] mydata = java.nio.file.Files.readAllBytes(myPath);
 		String base64 = Base64.getEncoder().encodeToString(mydata);
 		//String base64 = DatatypeConverter.printBase64Binary(mydata);
+		if(seccao.equals("Acessorios")) {
+			tipo = "Acessorios";
+		}
 		String idPecaInserida = ClienteTCP.AdicionarPeca(seccao, tipo, designacao, marca, descricao, preco, base64);
 		
 		response.setContentType("text/html");

@@ -64,4 +64,7 @@
 <Utilizador DataNasc="1997-06-19" NIF="658965231" Nome="Bleu Bleu">
 <Cliente/>
 </Utilizador>
+<Utilizador DataNasc="1990-06-16" NIF="358794587" Nome="Teste Teste">
+<Cliente/>
+</Utilizador>
 </ListaUtilizadores>
