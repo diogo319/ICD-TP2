@@ -78,7 +78,7 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 		
 		float total = 0;
 		
-		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th><th>Preço</th></tr>");
+		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th><th>Preço / Unidade</th><th>Preço Total</th</tr>");
 		NodeList pecasCarrinho = carrinho.getChildNodes();
 		for(int j = 0; j < pecasCarrinho.getLength(); j++) {
 			String idPecaCarrinho = pecasCarrinho.item(j).getAttributes().getNamedItem("ID").getTextContent();
@@ -87,12 +87,13 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
 			String tamanho = pecasCarrinho.item(j).getAttributes().getNamedItem("Tamanho").getTextContent();
 			String quantidade = pecasCarrinho.item(j).getAttributes().getNamedItem("Quantidade").getTextContent();
+			String preco = peca.getAttributes().getNamedItem("Preço").getTextContent();
 			//Node peca = ClienteTCP.PecaByID(idPeca);
-			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td><td>" + preco + "</td></tr>");
-			total += Float.parseFloat(preco);
+			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td><td>" + preco + " &euro;</td><td>" + Integer.parseInt(preco)*(Integer.parseInt(quantidade)) + " &euro;" + "</td></tr>");
+			total += (Float.parseFloat(preco)*Float.parseFloat(quantidade));
 			//out.println("<h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1>");
 		}
-		out.println("<tr><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><th>Total</th><td>" + total + " &euro;" + "</td></tr>");
+		out.println("<tr><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><th>Total</th><td>" + total + " &euro;" + "</td></tr>");
 		out.println("</table>");
 				
 		out.println("</body></html>");
