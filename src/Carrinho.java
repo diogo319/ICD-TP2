@@ -65,12 +65,10 @@ public class Carrinho extends HttpServlet {
     		out.println("<div class='corpo'><h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1></div>");
         	String image = ((Element)peca).getElementsByTagName("Foto").item(0).getTextContent();
         	String descricao = ((Element)peca).getElementsByTagName("Caracteristica").item(0).getTextContent();
-        	String preco = peca.getAttributes().getNamedItem("Preço").getTextContent();
         	
         	out.println("<img class='imagens' src='data:image/jpg;base64, " + image + "' width='200px' height='auto'></img>");
         	
         	out.println("<form action='AdicionarPecasCarrinho?idPeca=" + idPeca[i] + "'><br><table id='itemtablesdois'>");
-        	out.println("<tr><th>Preço</th><td align='center'>" + preco + "&euro;" + "</td></tr>");
         	
         	String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
         	

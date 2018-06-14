@@ -250,7 +250,7 @@ public class comando {
 	}
 	
 	
-	public Document requestAdicionarCarrinho(String nif, int idPeca, String tamanho, int quantidade, float preco) {
+	public Document requestAdicionarCarrinho(String nif, int idPeca, String tamanho, int quantidade) {
 		Element adicionarCarrinho = cmd.createElement("adicionarCarrinho");
 		Element request = cmd.createElement("request");
 		adicionarCarrinho.appendChild(request);
@@ -259,19 +259,16 @@ public class comando {
 		Element idPecaElem = cmd.createElement("idPeca");
 		Element tamanhoElem = cmd.createElement("tamanho");
 		Element quantidadeElem = cmd.createElement("quantidade");
-		Element precoElem = cmd.createElement("preco");
 		
 		nifElem.appendChild(cmd.createTextNode(nif));
 		idPecaElem.appendChild(cmd.createTextNode(String.valueOf(idPeca)));
 		tamanhoElem.appendChild(cmd.createTextNode(tamanho));
 		quantidadeElem.appendChild(cmd.createTextNode(String.valueOf(quantidade)));
-		precoElem.appendChild(cmd.createTextNode(String.valueOf(preco)));
 		
 		request.appendChild(nifElem);
 		request.appendChild(idPecaElem);
 		request.appendChild(tamanhoElem);
 		request.appendChild(quantidadeElem);
-		request.appendChild(precoElem);
 		
 		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
 		protocol.appendChild(adicionarCarrinho);
@@ -288,7 +285,6 @@ public class comando {
 		String nif = cmd.getElementsByTagName("nif").item(0).getTextContent();
 		String tamanho = cmd.getElementsByTagName("tamanho").item(0).getTextContent();
 		String quantidade = cmd.getElementsByTagName("quantidade").item(0).getTextContent();
-		String preco = cmd.getElementsByTagName("preco").item(0).getTextContent();
 		
 		Node carrinho = null;
 		Node utilizador = null;
@@ -318,7 +314,6 @@ public class comando {
 		pecaElem.setAttribute("ID", idPeca);
 		pecaElem.setAttribute("Tamanho", tamanho);
 		pecaElem.setAttribute("Quantidade", quantidade);
-		pecaElem.setAttribute("Preço", preco);
 	
 		Element reply = cmd.createElement("reply");
 		

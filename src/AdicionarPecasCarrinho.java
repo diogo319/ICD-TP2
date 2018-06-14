@@ -44,9 +44,8 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			
 			tamanhos = request.getParameterValues("valor");
 			quantidades = request.getParameterValues("quantidade");
-			precos = request.getParameterValues("preco");
 			for(int i = 0; i < tamanhos.length; i++) {
-				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i], Float.parseFloat(precos[i]));
+				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i]);
 			}
 		}
 		
@@ -88,7 +87,6 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
 			String tamanho = pecasCarrinho.item(j).getAttributes().getNamedItem("Tamanho").getTextContent();
 			String quantidade = pecasCarrinho.item(j).getAttributes().getNamedItem("Quantidade").getTextContent();
-			String preco = pecasCarrinho.item(j).getAttributes().getNamedItem("Preço").getTextContent() ;
 			//Node peca = ClienteTCP.PecaByID(idPeca);
 			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td><td>" + preco + "</td></tr>");
 			total += Float.parseFloat(preco);

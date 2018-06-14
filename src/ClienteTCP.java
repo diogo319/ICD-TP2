@@ -702,14 +702,14 @@ public class ClienteTCP {
 	}
 	
 	
-	public static Node AdicionarCarrinho(int idPeca, int quantidade, String tamanho, float preco) {
+	public static Node AdicionarCarrinho(int idPeca, int quantidade, String tamanho) {
 		Socket sock = null;
 		Node carrinho = null;
 		try {
 			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
 			comando cmd = new comando();
 			
-			Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade, preco);
+			Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade);
 			
 			XMLReadWrite.documentToSocket(request, sock);
 					
