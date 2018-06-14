@@ -66,6 +66,7 @@ public class Carrinho extends HttpServlet {
         	String image = ((Element)peca).getElementsByTagName("Foto").item(0).getTextContent();
         	String descricao = ((Element)peca).getElementsByTagName("Caracteristica").item(0).getTextContent();
         	String preco = peca.getAttributes().getNamedItem("Preço").getTextContent();
+        	
         	out.println("<img class='imagens' src='data:image/jpg;base64, " + image + "' width='200px' height='auto'></img>");
         	
         	out.println("<form action='AdicionarPecasCarrinho?idPeca=" + idPeca[i] + "'><br><table id='itemtablesdois'>");

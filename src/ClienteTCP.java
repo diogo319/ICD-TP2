@@ -702,20 +702,22 @@ public class ClienteTCP {
 	}
 	
 	
-	public static Node AdicionarCarrinho(int idPeca, int quantidade, String tamanho) {
+	public static Node AdicionarCarrinho(int idPeca, int quantidade, String tamanho, float preco) {
 		Socket sock = null;
 		Node carrinho = null;
 		try {
 			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
 			comando cmd = new comando();
 			
-			Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade);
+			Document request = cmd.requestAdicionarCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade, preco);
 			
 			XMLReadWrite.documentToSocket(request, sock);
 					
 			Document reply = XMLReadWrite.documentFromSocket(sock);
 					
 			carrinho = reply.getElementsByTagName("Carrinho").item(0);
+			
+			XMLDoc.writeDocument(reply, "replyCarrinho.xml");
 		}catch(UnknownHostException e) {
             e.printStackTrace();
         }catch(IOException e) {

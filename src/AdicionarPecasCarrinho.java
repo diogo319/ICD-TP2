@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.ParseConversionEvent;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -36,14 +37,16 @@ public class AdicionarPecasCarrinho extends HttpServlet {
         String idPeca = request.getParameter("idPeca");
         String[] tamanhos;
 		String[] quantidades;
+		String[] precos;
 		
 		//TODO Adicionar todas as peças
 		if (!idPeca.equals("vazio")) {
 			
 			tamanhos = request.getParameterValues("valor");
 			quantidades = request.getParameterValues("quantidade");
+			precos = request.getParameterValues("preco");
 			for(int i = 0; i < tamanhos.length; i++) {
-				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i]);
+				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i], Float.parseFloat(precos[i]));
 			}
 		}
 		
@@ -74,7 +77,9 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 		//TODO mostrar carrinho apos alteraçoes
 		Node carrinho = ClienteTCP.Carrinho();
 		
-		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th></tr>");
+		float total = 0;
+		
+		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th><th>Preço</th></tr>");
 		NodeList pecasCarrinho = carrinho.getChildNodes();
 		for(int j = 0; j < pecasCarrinho.getLength(); j++) {
 			String idPecaCarrinho = pecasCarrinho.item(j).getAttributes().getNamedItem("ID").getTextContent();
@@ -83,10 +88,13 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			String seccao = peca.getAttributes().getNamedItem("Secção").getTextContent();
 			String tamanho = pecasCarrinho.item(j).getAttributes().getNamedItem("Tamanho").getTextContent();
 			String quantidade = pecasCarrinho.item(j).getAttributes().getNamedItem("Quantidade").getTextContent();
+			String preco = pecasCarrinho.item(j).getAttributes().getNamedItem("Preço").getTextContent() ;
 			//Node peca = ClienteTCP.PecaByID(idPeca);
-			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td></tr>");
+			out.println("<tr><td>" + designacao +"</td><td>" + seccao + "</td><td>" + tamanho + "</td><td>" + quantidade + "</td><td>" + preco + "</td></tr>");
+			total += Float.parseFloat(preco);
 			//out.println("<h1>" + peca.getAttributes().getNamedItem("Designação").getTextContent() + "</h1>");
 		}
+		out.println("<tr><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><th>Total</th><td>" + total + " &euro;" + "</td></tr>");
 		out.println("</table>");
 				
 		out.println("</body></html>");

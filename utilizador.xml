@@ -64,4 +64,7 @@
 <Utilizador DataNasc="1997-06-19" NIF="658965231" Nome="Bleu Bleu">
 <Cliente/>
 </Utilizador>
+<Utilizador DataNasc="2018-06-15" NIF="111111111" Nome="Antonio Banderas">
+<Cliente/>
+</Utilizador>
 </ListaUtilizadores>
