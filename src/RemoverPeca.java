@@ -8,23 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.ParseConversionEvent;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Servlet implementation class MostrarCarrinho
+ * Servlet implementation class RemoverPeca
  */
-@WebServlet("/AdicionarPecasCarrinho")
-public class AdicionarPecasCarrinho extends HttpServlet {
+@WebServlet("/RemoverPeca")
+public class RemoverPeca extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+
 		response.setContentType("text/html");
         
         PrintWriter out = response.getWriter();
@@ -35,19 +35,11 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 
         
         String idPeca = request.getParameter("idPeca");
-        String[] tamanhos;
-		String[] quantidades;
-		
-		//TODO Adicionar todas as peças
-		if (!idPeca.equals("vazio")) {
-			
-			tamanhos = request.getParameterValues("valor");
-			quantidades = request.getParameterValues("quantidade");
-			for(int i = 0; i < tamanhos.length; i++) {
-				ClienteTCP.AdicionarCarrinho(Integer.parseInt(idPeca), Integer.parseInt(quantidades[i]), tamanhos[i]);
-			}
-		}
-		
+        String tamanhoRemover = request.getParameter("tamanho");
+        String quantidadeRemover = request.getParameter("quantidade");
+        
+        ClienteTCP.RemoverPecaCarrinho(idPeca, tamanhoRemover, quantidadeRemover);
+        
 		out.println("<div class=\"cabecalho\">" 
 				+"  <img id=\"logo\" src=\"images/RDDSports.png\"/>" 
 				+"  <nav>" 
@@ -107,9 +99,7 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 				+ "window.open('RemoverPeca?idPeca='+idPeca+'&tamanho='+tamanho+'&quantidade='+quantidade+'','_self');}</script>");
 		
 		out.println("</body></html>");
-		
 	}
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

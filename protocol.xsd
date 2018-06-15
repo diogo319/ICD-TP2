@@ -72,6 +72,30 @@
 					</xs:complexType>
 				</xs:element>
 				
+				<xs:element name="removerPecaCarrinho">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="request">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nif" type="xs:string" maxOccurs="1"/>
+										<xs:element name="idPeca" type="xs:string" maxOccurs="1" minOccurs="1"/>
+										<xs:element name="tamanho" type="xs:string" maxOccurs="1" minOccurs="1"/>
+										<xs:element name="quantidade" type="xs:string" maxOccurs="1" minOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reply" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Carrinho" minOccurs="0" maxOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
 				<xs:element name="mostrarTodosCarrinhos">
 					<xs:complexType>
 						<xs:sequence>

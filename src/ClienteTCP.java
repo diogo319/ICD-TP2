@@ -717,7 +717,30 @@ public class ClienteTCP {
 					
 			carrinho = reply.getElementsByTagName("Carrinho").item(0);
 			
-			XMLDoc.writeDocument(reply, "replyCarrinho.xml");
+			//XMLDoc.writeDocument(reply, "replyCarrinho.xml");
+		}catch(UnknownHostException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+	
+		return carrinho;
+	}
+
+	public static Node RemoverPecaCarrinho(String idPeca, String tamanho, String quantidade) {
+		Socket sock = null;
+		Node carrinho = null;
+		try {
+			sock = new Socket(DEFAULT_HOSTNAME, DEFAULT_PORT);
+			comando cmd = new comando();
+			
+			Document request = cmd.requestRemoverPecaCarrinho(utilizador.getAttributes().getNamedItem("NIF").getTextContent(), idPeca, tamanho, quantidade);
+			
+			XMLReadWrite.documentToSocket(request, sock);
+			
+			Document reply = XMLReadWrite.documentFromSocket(sock);
+			
+			carrinho = reply.getElementsByTagName("Carrinho").item(0);
 		}catch(UnknownHostException e) {
             e.printStackTrace();
         }catch(IOException e) {

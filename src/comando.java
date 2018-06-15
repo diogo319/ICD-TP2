@@ -249,6 +249,90 @@ public class comando {
 		return cmd;
 	}
 	
+
+	
+	public Document requestRemoverPecaCarrinho(String nif, String idPeca, String tamanho, String quantidade) {
+		Element removerPecaCarrinho = cmd.createElement("removerPecaCarrinho");
+		Element request = cmd.createElement("request");
+		removerPecaCarrinho.appendChild(request);
+		
+		Element nifElem = cmd.createElement("nif");
+		Element idPecaElem = cmd.createElement("idPeca");
+		Element tamanhoElem = cmd.createElement("tamanho");
+		Element quantidadeElem = cmd.createElement("quantidade");
+		
+		nifElem.appendChild(cmd.createTextNode(nif));
+		idPecaElem.appendChild(cmd.createTextNode(idPeca));
+		tamanhoElem.appendChild(cmd.createTextNode(tamanho));
+		quantidadeElem.appendChild(cmd.createTextNode(quantidade));
+		
+		request.appendChild(nifElem);
+		request.appendChild(idPecaElem);
+		request.appendChild(tamanhoElem);
+		request.appendChild(quantidadeElem);
+		
+		Element protocol = (Element) cmd.getElementsByTagName("protocol").item(0);
+		protocol.appendChild(removerPecaCarrinho);
+		
+		return cmd;
+	}
+	
+	public Document replyRemoverPecaCarrinho() {
+		Document todosUtilizadores = Loja.getUtilizadores();
+		//NodeList pecas = Loja.getPecas().getElementsByTagName("Peça");
+		NodeList utilizadores = todosUtilizadores.getElementsByTagName("Utilizador");
+		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
+		String nif = cmd.getElementsByTagName("nif").item(0).getTextContent();
+		String tamanho = cmd.getElementsByTagName("tamanho").item(0).getTextContent();
+		String quantidade = cmd.getElementsByTagName("quantidade").item(0).getTextContent();
+		
+		Node carrinho = null;
+		//Node utilizador = null;
+		for(int i = 0; i < utilizadores.getLength(); i++) {
+			if(utilizadores.item(i).getAttributes().getNamedItem("NIF").getTextContent().equals(nif)) {
+				//utilizador = utilizadores.item(i).getFirstChild().getNextSibling();
+				if(((Element)utilizadores.item(i)).getElementsByTagName("Carrinho").getLength() != 0) {
+					carrinho = ((Element)utilizadores.item(i)).getElementsByTagName("Carrinho").item(0);
+				}
+				break;
+			}
+		}
+		
+		
+		NodeList pecasCarrinho = ((Element)carrinho).getElementsByTagName("Peça");
+		for(int i = 0; i < pecasCarrinho.getLength(); i++) {
+			if(pecasCarrinho.item(i).getAttributes().getNamedItem("ID").getTextContent().equals(idPeca) &&
+					pecasCarrinho.item(i).getAttributes().getNamedItem("Quantidade").getTextContent().equals(quantidade) &&
+					pecasCarrinho.item(i).getAttributes().getNamedItem("Tamanho").getTextContent().equals(tamanho)) {
+				
+				carrinho.removeChild(pecasCarrinho.item(i));
+				break;
+			}
+		}
+		Element reply = cmd.createElement("reply");
+		Element removerPecaCarrinho = (Element) cmd.getElementsByTagName("removerPecaCarrinho").item(0);
+
+		Element clone = (Element)cmd.importNode(carrinho, true);
+		reply.appendChild(clone);
+		removerPecaCarrinho.appendChild(reply);
+		
+		try {
+			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
+				//todosUtilizadores.getDocumentElement().removeChild(utilizador);
+				//reply.appendChild(utilizadorVazio);
+				return cmd;
+			}
+			XMLDoc.writeDocument(todosUtilizadores, "utilizador.xml");
+			
+			return cmd;
+		} catch (SAXException e) {
+			//e.printStackTrace();
+			//todosUtilizadores.getDocumentElement().removeChild(utilizador);
+			//reply.appendChild(utilizadorVazio);
+			return cmd;
+		}
+	}
+	
 	
 	public Document requestAdicionarCarrinho(String nif, int idPeca, String tamanho, int quantidade) {
 		Element adicionarCarrinho = cmd.createElement("adicionarCarrinho");
@@ -917,6 +1001,9 @@ public class comando {
 		
 		if(cmd.getElementsByTagName("modificarQuantidadeAcessorio").getLength()==1)
 			com = replyModificarQuantidadeAcessorio();
+		
+		if(cmd.getElementsByTagName("removerPecaCarrinho").getLength()==1)
+			com = replyRemoverPecaCarrinho();
 		
 		if(com==null)
 			return cmd;
