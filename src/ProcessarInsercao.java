@@ -32,7 +32,7 @@ public class ProcessarInsercao extends HttpServlet {
 		String descricao = request.getParameter("descricao");
 		String preco = request.getParameter("preco");
 		String path = request.getParameter("image");
-
+		
 		Path myPath = Paths.get(path);
 		byte[] mydata = java.nio.file.Files.readAllBytes(myPath);
 		String base64 = Base64.getEncoder().encodeToString(mydata);
@@ -41,7 +41,36 @@ public class ProcessarInsercao extends HttpServlet {
 			tipo = "Acessorios";
 		}
 		String idPecaInserida = ClienteTCP.AdicionarPeca(seccao, tipo, designacao, marca, descricao, preco, base64);
-		
+		if(seccao.equals("Mulher") || seccao.equals("Homem")) {
+			if(tipo.equals("Vestuario")) {
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "S", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "M", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "L", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "XL", "0");
+			}
+			else {
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "43", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "42", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "41", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "40", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "39", "0");
+			}
+		}
+		else if(seccao.equals("Crianca")) {
+			if(tipo.equals("Vestuario")) {
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "6/8", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "8/10", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "10/12", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "12/14", "0");
+			}
+			else {
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "35", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "34", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "33", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "32", "0");
+				ClienteTCP.AlterarQuantidade(idPecaInserida, "31", "0");
+			}
+		}
 		response.setContentType("text/html");
         
         PrintWriter out = response.getWriter();
