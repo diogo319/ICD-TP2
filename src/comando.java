@@ -279,7 +279,8 @@ public class comando {
 	
 	public Document replyRemoverPecaCarrinho() {
 		Document todosUtilizadores = Loja.getUtilizadores();
-		//NodeList pecas = Loja.getPecas().getElementsByTagName("Peça");
+		Document todasPecas = Loja.getPecas();
+		NodeList pecas = todasPecas.getElementsByTagName("Peça");
 		NodeList utilizadores = todosUtilizadores.getElementsByTagName("Utilizador");
 		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
 		String nif = cmd.getElementsByTagName("nif").item(0).getTextContent();
@@ -298,6 +299,25 @@ public class comando {
 			}
 		}
 		
+		Node peca = null;
+		for(int i = 0; i < pecas.getLength(); i++) {
+			if(pecas.item(i).getAttributes().getNamedItem("idPeça").getTextContent().equals(idPeca)) {
+				peca = pecas.item(i);
+				break;
+			}
+		}
+		
+		NodeList tamanhos = ((Element)peca).getElementsByTagName("Tamanho");
+		
+		for(int i = 0; i < tamanhos.getLength(); i++) {
+			if(tamanhos.item(i).getAttributes().getNamedItem("Valor").getTextContent().equals(tamanho)) {
+				String quantidadeAtual = tamanhos.item(i).getAttributes().getNamedItem("Quantidade").getTextContent();
+				int quantidadeAlterar = Integer.parseInt(quantidadeAtual) + Integer.parseInt(quantidade);
+				Element tamanhoElem = (Element)tamanhos.item(i);
+				tamanhoElem.removeAttribute("Quantidade");
+				tamanhoElem.setAttribute("Quantidade", String.valueOf(quantidadeAlterar));
+			}
+		}
 		
 		NodeList pecasCarrinho = ((Element)carrinho).getElementsByTagName("Peça");
 		for(int i = 0; i < pecasCarrinho.getLength(); i++) {
@@ -309,6 +329,7 @@ public class comando {
 				break;
 			}
 		}
+		
 		Element reply = cmd.createElement("reply");
 		Element removerPecaCarrinho = (Element) cmd.getElementsByTagName("removerPecaCarrinho").item(0);
 
@@ -317,12 +338,13 @@ public class comando {
 		removerPecaCarrinho.appendChild(reply);
 		
 		try {
-			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
+			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI) || !XMLDoc.validDoc(todasPecas, "peça.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
 				//todosUtilizadores.getDocumentElement().removeChild(utilizador);
 				//reply.appendChild(utilizadorVazio);
 				return cmd;
 			}
 			XMLDoc.writeDocument(todosUtilizadores, "utilizador.xml");
+			XMLDoc.writeDocument(todasPecas, "peça.xml");
 			
 			return cmd;
 		} catch (SAXException e) {
@@ -363,7 +385,8 @@ public class comando {
 	public Document replyAdicionarCarrinho() {
 		//TODO
 		Document todosUtilizadores = Loja.getUtilizadores();
-		NodeList pecas = Loja.getPecas().getElementsByTagName("Peça");
+		Document todasPecas = Loja.getPecas();
+		NodeList pecas = todasPecas.getElementsByTagName("Peça");
 		NodeList utilizadores = todosUtilizadores.getElementsByTagName("Utilizador");
 		String idPeca = cmd.getElementsByTagName("idPeca").item(0).getTextContent();
 		String nif = cmd.getElementsByTagName("nif").item(0).getTextContent();
@@ -394,6 +417,18 @@ public class comando {
 			return cmd;
 		}
 		
+		NodeList tamanhos = ((Element)peca).getElementsByTagName("Tamanho");
+		
+		for(int i = 0; i < tamanhos.getLength(); i++) {
+			if(tamanhos.item(i).getAttributes().getNamedItem("Valor").getTextContent().equals(tamanho)) {
+				String quantidadeAtual = tamanhos.item(i).getAttributes().getNamedItem("Quantidade").getTextContent();
+				int quantidadeAlterar = Integer.parseInt(quantidadeAtual) - Integer.parseInt(quantidade);
+				Element tamanhoElem = (Element)tamanhos.item(i);
+				tamanhoElem.removeAttribute("Quantidade");
+				tamanhoElem.setAttribute("Quantidade", String.valueOf(quantidadeAlterar));
+			}
+		}
+		
 		Element pecaElem = todosUtilizadores.createElement("Peça");
 		pecaElem.setAttribute("ID", idPeca);
 		pecaElem.setAttribute("Tamanho", tamanho);
@@ -417,12 +452,13 @@ public class comando {
 		Element adicionarCarrinho = (Element)cmd.getElementsByTagName("adicionarCarrinho").item(0);
 		adicionarCarrinho.appendChild(reply);
 		try {
-			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
+			if(!XMLDoc.validDoc(todosUtilizadores, "utilizador.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI) || !XMLDoc.validDoc(todasPecas, "peça.xsd", XMLConstants.W3C_XML_SCHEMA_NS_URI)) {
 				//todosUtilizadores.getDocumentElement().removeChild(utilizador);
 				//reply.appendChild(utilizadorVazio);
 				return cmd;
 			}
 			XMLDoc.writeDocument(todosUtilizadores, "utilizador.xml");
+			XMLDoc.writeDocument(todasPecas, "peça.xml");
 			
 			/*NodeList todosUtilizadores = todosUtilizadores.getElementsByTagName("Utilizador");
 			for(int i = 0; i < todosUtilizadores.getLength(); i++) {

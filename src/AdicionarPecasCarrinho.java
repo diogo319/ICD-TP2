@@ -77,7 +77,7 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 		
 		float total = 0;
 		out.println("<form id='formRemover' action='RemoverPeca'>");
-		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th><th>Preço / Unidade</th><th>Preço Total</th</tr>");
+		out.println("<table id='tables'><tr><th>Designação</th><th>Secção</th><th>Tamanho</th><th>Quantidade</th><th>Preço / Unidade</th><th>Preço Total</th><th>Remover</th></tr>");
 		
 		NodeList pecasCarrinho = carrinho.getChildNodes();
 		for(int j = 0; j < pecasCarrinho.getLength(); j++) {
@@ -97,7 +97,7 @@ public class AdicionarPecasCarrinho extends HttpServlet {
 			total += (Float.parseFloat(preco)*Integer.parseInt(quantidade));
 
 		}
-		out.println("<tr><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><td style='border: none;'></td><th>Total</th><td>" + total + " &euro;" + "</td></tr>");
+		out.println("<tr style='background-color: white !important;'><td style='border: none; background: white;'></td><td style='border: none; background: white;'></td><td style='border: none; background: white;'></td><td style='border: none; background: white;'></td><th>Total</th><td>" + total + " &euro;" + "</td></tr>");
 		out.println("</table>");
 		out.println("</form>'");
 			
